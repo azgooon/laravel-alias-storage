@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Besanek\LaravelAliasStorage;
 
 use Besanek\LaravelAliasStorage\Exceptions\InvalidConfigurationException;
-use Closure;
 use DomainException;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -21,7 +20,7 @@ class AliasStorageProvider extends ServiceProvider
     {
         $filesystemManager = $this->getFilesystemManager();
 
-        $filesystemManager->extend('alias', Closure::fromCallable([$this, 'extend']));
+        $filesystemManager->extend('alias', fn ($app, $config) => $this->extend($app, $config));
     }
 
     /**
